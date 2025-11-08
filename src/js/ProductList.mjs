@@ -1,4 +1,5 @@
 import { renderListWithTemplate } from "./utils.mjs";
+import { isDiscounted, discountPercentage } from "./utils.mjs";
 
 export default class ProductList {
     constructor(category, dataSource, listElement) {
@@ -19,12 +20,21 @@ export default class ProductList {
 
 function productCardTemplate(product) {
     return `
-        <li class="product-card">
+        <li class="product-card ${isDiscounted(product) ? "discounted" : ""}">
             <a href="product_pages/?products=${product.Id}">
                 <img src="${product.Image}" alt="${product.Name}">
                 <h2>${product.Brand.Name}</h2>
                 <h3>${product.Name}</h3>
-                <p class="product-card__price">$${product.FinalPrice}</p>
+                <div class="price-row">
+                ${isDiscounted(product)
+                    ? `
+                        <span class="price price__final">$${product.FinalPrice.toFixed(2)}</span>
+                        <span class="price price__srp">$${product.SuggestedRetailPrice.toFixed(2)}</span>
+                        <span class="badge badge__discount">-${discountPercentage(product)}%</span> `
+                    : `
+                        <span class="product-card__price">$${product.FinalPrice.toFixed(2)}</span>`
+                }
+                </div>
             </a>
         </li>
         `;
