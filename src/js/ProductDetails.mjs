@@ -1,5 +1,4 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
-
+import { getLocalStorage, setLocalStorage, discountPercentage } from "./utils.mjs";
 export default class ProductDetails {
     constructor(productId, dataSource) {
         this.productId = productId;
@@ -34,8 +33,20 @@ function productDetailsTemplate(product) {
     const productImage = document.querySelector("img.divider");
     productImage.src = product.Image;
     productImage.alt = product.NameWithoutBrand;
+    
+    const priceContainer = document.querySelector(".product-card__price");
 
-    document.querySelector(".product-card__price").textContent = product.FinalPrice;
+    if (product.FinalPrice < product.SuggestedRetailPrice) {
+        priceContainer.innerHTML = `
+            <span class="price price__final">$${product.FinalPrice.toFixed(2)}</span>
+            <span class ="price price__srp">$${product.SuggestedRetailPrice.toFixed(2)}</span>
+            <span class="badge badge__discount">-${discountPercentage(product)}%</span>
+        `;
+    }
+    else {
+        priceContainer.innerHTML = `$${product.priceFinal.toFixed(2)}`;
+    }
+    
     document.querySelector(".product__color").textContent = product.Colors[0].ColorName;
     document.querySelector(".product__description").innerHTML = product.DescriptionHtmlSimple;
 
