@@ -38,3 +38,13 @@ export function renderListWithTemplate(template, parentElement, list, position =
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+export function isDiscounted(item) {
+  return item.FinalPrice < item.SuggestedRetailPrice;
+}
+
+export function discountPercentage(item) {
+  const discount = ((item.SuggestedRetailPrice - item.FinalPrice) / item.SuggestedRetailPrice) * 100;
+  return Math.round(discount);
+}
+
