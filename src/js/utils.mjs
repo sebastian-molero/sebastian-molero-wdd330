@@ -48,3 +48,9 @@ export function discountPercentage(item) {
   return Math.round(discount);
 }
 
+export function updateCartCount() {
+  const cartCount = document.querySelector(".cart-count");
+  const cartItems = getLocalStorage("so-cart") || [];
+
+  cartCount.textContent = cartItems.length;
+}
