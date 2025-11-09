@@ -1,0 +1,17 @@
+[
+  {
+    "message": "This is only a test",
+    "background": "#00008b",
+    "color": "#ffffff"
+  },
+  {
+    "message": "Holiday sale starts tomorrow",
+    "background": "#dc143c",
+    "color": "#ffffff"
+  },
+  {
+    "message": "Free shipping this weekend",
+    "background": "#008000",
+    "color": "#ffffff"
+  }
+]
