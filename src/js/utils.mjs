@@ -50,7 +50,40 @@ export function discountPercentage(item) {
 
 export function updateCartCount() {
   const cartCount = document.querySelector(".cart-count");
-  const cartItems = getLocalStorage("so-cart") || [];
 
+  if (!cartCount) return;
+  
+  const cartItems = getLocalStorage("so-cart") || [];
   cartCount.textContent = cartItems.length;
+}
+
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = template;
+
+  if (callback) {
+    callback(data);
+  }
+}
+
+async function loadTemplate(path) {
+  const response = await fetch(path);
+  const template = await response.text();
+
+  return template;
+}
+
+export async function loadHeaderFooter() {
+  const headerTemplate = await loadTemplate("/partials/header.html");
+  const footerTemplate = await loadTemplate("/partials/footer.html");
+
+  const header = document.getElementById("header");
+  const footer = document.getElementById("footer");
+
+  renderWithTemplate(headerTemplate, header);
+  renderWithTemplate(footerTemplate, footer);
+}
+
+export async function cartLoading() {
+  await loadHeaderFooter();
+  updateCartCount();
 }
