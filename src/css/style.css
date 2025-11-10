@@ -195,6 +195,45 @@ button {
   color: var(--dark-grey);
 }
 
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 50px auto;
+  gap: 2rem;
+}
+
+.category {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 200px;
+  text-decoration: none;
+  transition:
+    transform 0.3s,
+    opacity 0.3s;
+}
+
+.categories:hover > .category:not(:hover) {
+  opacity: 0.5;
+}
+
+.category:hover {
+  transform: scale(1.1);
+}
+
+.category img {
+  width: 70%;
+}
+
+.category h2 {
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--dark-grey);
+}
+
 /* Styles for product lists */
 .product-card {
   flex: 1 1 45%;
