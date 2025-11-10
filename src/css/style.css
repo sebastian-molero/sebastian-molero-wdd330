@@ -208,12 +208,13 @@ button {
   display: flex;
   flex-flow: column;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
   max-width: 200px;
   text-decoration: none;
   transition:
     transform 0.3s,
     opacity 0.3s;
+  padding: 0;
 }
 
 .categories:hover > .category:not(:hover) {
@@ -225,7 +226,7 @@ button {
 }
 
 .category img {
-  width: 70%;
+  width: 60%;
 }
 
 .category h2 {

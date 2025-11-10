@@ -8,7 +8,7 @@ export default class ProductList {
     }
 
     async init() {
-        const list = await this.dataSource.getData();
+        const list = await this.dataSource.getData(this.category);
         this.renderList(list);
     }
 
@@ -19,22 +19,26 @@ export default class ProductList {
 
 function productCardTemplate(product) {
     return `
-        <li class="product-card ${isDiscounted(product) ? "discounted" : ""}">
-            <a href="product_pages/?product=${product.Id}">
-                <img src="${product.Image}" alt="${product.Name}">
-                <h2>${product.Brand.Name}</h2>
-                <h3>${product.Name}</h3>
-                <div class="price-row">
-                ${isDiscounted(product)
-                    ? `
-                        <span class="price price__final">$${product.FinalPrice.toFixed(2)}</span>
-                        <span class="price price__srp">$${product.SuggestedRetailPrice.toFixed(2)}</span>
-                        <span class="badge badge__discount">-${discountPercentage(product)}%</span> `
-                    : `
-                        <span class="product-card__price">$${product.FinalPrice.toFixed(2)}</span>`
-                }
-                </div>
-            </a>
-        </li>
-        `;
-}
+      <li class="product-card ${isDiscounted(product) ? "discounted" : ""}">
+        <a href="../product_pages/index.html?id=${product.Id}">
+          <img src="${product.Images?.PrimaryMedium}" alt="${product.Name}" />
+          <h2 class="card__brand">${product.Brand?.Name || ""}</h2>
+          <h3 class="card__name">${product.Name}</h3>
+          <div class="price-row">
+            ${
+              isDiscounted(product)
+                ? `
+                  <span class="price price__final">$${product.FinalPrice.toFixed(2)}</span>
+                  <span class="price price__srp">$${product.SuggestedRetailPrice.toFixed(2)}</span>
+                  <span class="badge badge__discount">-${discountPercentage(product)}%</span>
+                `
+                : `
+                  <span class="product-card__price">$${product.FinalPrice.toFixed(2)}</span>
+                `
+            }
+          </div>
+        </a>
+      </li>
+    `;
+  }
+  
