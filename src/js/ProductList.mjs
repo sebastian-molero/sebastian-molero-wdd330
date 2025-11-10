@@ -1,5 +1,4 @@
-import { renderListWithTemplate } from "./utils.mjs";
-import { isDiscounted, discountPercentage } from "./utils.mjs";
+import { renderListWithTemplate, isDiscounted, discountPercentage } from "./utils.mjs";
 
 export default class ProductList {
     constructor(category, dataSource, listElement) {
