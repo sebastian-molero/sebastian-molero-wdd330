@@ -29,18 +29,15 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
-  // Nombre y marca
   document.querySelector(".product-detail h2").textContent = product.Brand?.Name || "";
   document.querySelector(".product-detail h3").textContent = product.Name;
 
-  // Imagen grande
   const productImage = document.querySelector("img.divider");
   if (productImage) {
     productImage.src = product.Images?.PrimaryLarge;
     productImage.alt = product.Name;
   }
 
-  // Precio
   const priceContainer = document.querySelector(".product-card__price");
   if (priceContainer) {
     if (product.FinalPrice < product.SuggestedRetailPrice) {
@@ -54,14 +51,12 @@ function productDetailsTemplate(product) {
     }
   }
 
-  // Color y descripción
   const colorEl = document.querySelector(".product__color");
   if (colorEl) colorEl.textContent = product.Colors?.[0]?.ColorName || "";
 
   const descEl = document.querySelector(".product__description");
   if (descEl) descEl.innerHTML = product.DescriptionHtmlSimple || "";
 
-  // Botón Add to Cart
   const addBtn = document.getElementById("addToCart");
   if (addBtn) addBtn.dataset.id = product.Id;
 }

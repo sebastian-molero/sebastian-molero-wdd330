@@ -13,7 +13,13 @@ export default class ProductList {
     }
 
     renderList(list) {
-        renderListWithTemplate(productCardTemplate, this.listElement, list);
+      if (!list || list.length === 0) {
+        this.listElement.innerHTML = "<p>No products found</p>";
+        return;
+      }
+      
+      renderListWithTemplate(productCardTemplate, this.listElement, list);
+      
     }
 }
 

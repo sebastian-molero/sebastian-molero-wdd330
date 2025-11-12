@@ -87,3 +87,17 @@ export async function cartLoading() {
   await loadHeaderFooter();
   updateCartCount();
 }
+
+export function searchProducts() {
+  const searchForm = document.getElementById("searchForm");
+  if (searchForm) {
+    searchForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const query = document.getElementById("searchInput").value.trim();
+      if (query) {
+        window.location.href = `/product_listing/index.html?search=${encodeURIComponent(query)}`;
+      }
+    }
+  );
+  }
+}
