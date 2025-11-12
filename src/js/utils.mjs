@@ -95,7 +95,7 @@ export function searchProducts() {
       e.preventDefault();
       const query = document.getElementById("searchInput").value.trim();
       if (query) {
-        window.location.href = `/product_listing/index.html?search=${encodeURIComponent(query)}`;
+        window.location.href = `/product_listing/index.html?search=${encodeURIComponent(query.toLowerCase())}`;
       }
     }
   );

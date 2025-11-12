@@ -25,7 +25,7 @@ export default class ProductData {
   }
 
   async searchProducts(query) {
-    const response = await fetch(`${baseURL}products/search/${query}`);
+    const response = await fetch(`${baseURL}products/search/${query.toLowerCase()}`);
     const data = await convertToJson(response);
     
     return data.Result;
