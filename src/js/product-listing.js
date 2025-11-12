@@ -24,7 +24,7 @@ async function init() {
     const title = document.querySelector(".page-title");
     if (title)
       title.textContent = `Search results for "${searchQuery
-        .split(" ")
+        .split("-")
         .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
         .join(" ")}"`;
   } else if (category) {
@@ -34,7 +34,7 @@ async function init() {
     const title = document.querySelector(".page-title");
     if (title)
       title.textContent = `Top Products: ${category
-        .split(" ")
+        .split("-")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ")}`;
   }

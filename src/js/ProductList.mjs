@@ -28,7 +28,20 @@ export default class ProductList {
       
       this.listElement.innerHTML = "";
       renderListWithTemplate(productCardTemplate, this.listElement, list);
+      this.updateBreadcrumb(this.category, list.length);
   }
+
+  updateBreadcrumb(category, count) {
+    const breadcrumb = document.querySelector(".breadcrumb");
+    if (breadcrumb) {
+      breadcrumb.innerHTML = `
+        ${category
+          .split("-")
+          .map((word) => word[0].toUpperCase() + word.slice(1))
+          .join(" ")}
+        → <span class="count">(${count} items)</span>`
+    }
+  } 
   
   sortProducts(list, criteria) {
     switch (criteria) {

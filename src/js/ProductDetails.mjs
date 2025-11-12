@@ -38,6 +38,14 @@ export default class ProductDetails {
 
   renderProductDetails() {
     productDetailsTemplate(this.product);
+    this.updateBreadcrumb(this.product.Category?.Name || "", "Products");
+  }
+
+  updateBreadcrumb(category) {
+    const breadcrumb = document.querySelector(".breadcrumb");
+    if (breadcrumb) {
+      breadcrumb.textContent = category;
+    }
   }
 }
 
