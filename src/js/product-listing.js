@@ -22,10 +22,11 @@ async function init() {
     productList.renderList(results);
 
     const title = document.querySelector(".page-title");
-    if (title) title.textContent = `Search results for "${searchQuery
-      .split(" ")
-      .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ")}"`;
+    if (title)
+      title.textContent = `Search results for "${searchQuery
+        .split(" ")
+        .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ")}"`;
   } else if (category) {
     const productList = new ProductList(category, dataSource, element);
     productList.init();
