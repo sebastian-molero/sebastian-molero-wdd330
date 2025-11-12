@@ -2,25 +2,48 @@ import { renderListWithTemplate, isDiscounted, discountPercentage } from "./util
 
 export default class ProductList {
     constructor(category, dataSource, listElement) {
-        this.category = category;
-        this.dataSource = dataSource;
-        this.listElement = listElement;
+      this.category = category;
+      this.dataSource = dataSource;
+      this.listElement = listElement;
+      this.list = [];
     }
 
     async init() {
-        const list = await this.dataSource.getData(this.category);
-        this.renderList(list);
-    }
-
+      this.list = await this.dataSource.getData(this.category);
+      this.renderList(this.list);
+        
+      const sortSelect = document.getElementById("sort");
+      sortSelect.addEventListener("change", (e) => {
+        const criteria = e.target.value;
+        const sorted = this.sortProducts([...this.list], criteria);
+        this.renderList(sorted);
+      });
+  };
+  
     renderList(list) {
       if (!list || list.length === 0) {
         this.listElement.innerHTML = "<p>No products found</p>";
         return;
       }
       
+      this.listElement.innerHTML = "";
       renderListWithTemplate(productCardTemplate, this.listElement, list);
-      
+  }
+  
+  sortProducts(list, criteria) {
+    switch (criteria) {
+      case "name_asc":
+        return list.sort((a, b) => a.Name.localeCompare(b.Name));
+      case "name_desc":
+        return list.sort((a, b) => b.Name.localeCompare(a.Name));
+      case "price_asc":
+        return list.sort((a, b) => a.FinalPrice - b.FinalPrice);
+      case "price_desc":
+        return list.sort((a, b) => b.FinalPrice - a.FinalPrice);
+      default:
+        return list;
     }
+  }
 }
 
 function productCardTemplate(product) {

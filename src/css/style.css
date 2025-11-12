@@ -260,6 +260,23 @@ header {
 }
 
 /* Styles for product lists */
+
+.sort-controls {
+  margin: 1rem;
+  text-align: right;
+}
+
+.sort-controls select {
+  padding: 0.3rem;
+  font-size: var(--small-font);
+  border: none;
+  border-bottom: 2px solid rgb(228, 228, 228);
+}
+
+.sort-controls select:focus-visible {
+  outline: none;
+}
+
 .product-card {
   flex: 1 1 45%;
   margin: 0.25em;
