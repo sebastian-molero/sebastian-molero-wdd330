@@ -10,8 +10,14 @@ function cartItemTemplate(item) {
         <h2 class="card__name">${item.Name}</h2>
       </a>
       <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-      <p class="cart-card__quantity">qty: 1</p>
-      <p class="cart-card__price">$${item.FinalPrice}</p>
+      <div class="cart-card__quantity">
+        <label for="quantity">Qty:</label>
+        <input id="quantity" type="number" min="1" value="${item.quantity || 1}" data-id="${item.Id}" class="cart-card__qty"/>
+      </div>
+      <p class="cart-card__price">
+        <span>Each: $${item.FinalPrice}</span> 
+        <span>Subtotal: $${(item.FinalPrice * (item.quantity || 1)).toLocaleString("en-US", { minimumFractionDigits: 2 })}</span>
+      </p>
       <button class="cart-card__remove" data-id="${item.Id}">&times;</button>
     </li>`;
 }
@@ -41,6 +47,23 @@ export default class ShoppingCart {
     const htmlItems = cartItems.map(cartItemTemplate);
     this.parentElement.innerHTML = htmlItems.join("");
 
+    this.parentElement.querySelectorAll(".cart-card__qty").forEach((input) => {
+      input.addEventListener("change", (e) => {
+        const productId = e.target.dataset.id;
+        const newQty = parseInt(e.target.value);
+
+        let updatedCart = getLocalStorage(this.key) || [];
+        const foundItem = updatedCart.find(p => p.Id === productId);
+
+        if (foundItem) {
+          foundItem.quantity = newQty > 0 ? newQty : 1;
+          setLocalStorage(this.key, updatedCart);
+          updateCartCount();
+          this.renderCartContents();
+        }
+      });
+    });
+
     this.parentElement.querySelectorAll(".cart-card__remove").forEach((button) => {
       button.addEventListener("click", (e) => {
         const productId = e.target.dataset.id;
@@ -57,7 +80,7 @@ export default class ShoppingCart {
 
     if (!footer || !totalElement) return;
 
-    const total = cartItems.reduce((acc, item) => acc + item.FinalPrice, 0);
+    const total = cartItems.reduce((acc, item) => acc + item.FinalPrice * (item.quantity || 1), 0);
     totalElement.textContent = `Total: $${total.toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
     footer.classList.remove("hide");
   }

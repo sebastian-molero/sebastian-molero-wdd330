@@ -54,7 +54,9 @@ export function updateCartCount() {
   if (!cartCount) return;
   
   const cartItems = getLocalStorage("so-cart") || [];
-  cartCount.textContent = cartItems.length;
+  const totalQty = cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0);
+
+  cartCount.textContent = totalQty;
 }
 
 export function renderWithTemplate(template, parentElement, data, callback) {

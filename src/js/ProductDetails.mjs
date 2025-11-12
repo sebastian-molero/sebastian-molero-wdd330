@@ -17,8 +17,21 @@ export default class ProductDetails {
   }
 
   addProductToCart() {
-    const cartItems = getLocalStorage("so-cart") || [];
-    cartItems.push(this.product);
+    const qtyInput = document.getElementById("quantity");
+    const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+
+    let cartItems = getLocalStorage("so-cart") || [];
+    
+    const existing = cartItems.find(item => item.Id === this.product.Id);
+    
+    if (existing) {
+      existing.quantity = (existing.quantity || 1) + quantity;
+    }
+    else {
+      const productToAdd = { ...this.product, quantity };
+      cartItems.push(productToAdd);
+    }
+    
     setLocalStorage("so-cart", cartItems);
     updateCartCount();
   }
