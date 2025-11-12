@@ -22,14 +22,20 @@ async function init() {
     productList.renderList(results);
 
     const title = document.querySelector(".page-title");
-    if (title) title.textContent = `Search results for "${searchQuery}"`;
+    if (title) title.textContent = `Search results for "${searchQuery
+      .split(" ")
+      .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ")}"`;
   } else if (category) {
     const productList = new ProductList(category, dataSource, element);
     productList.init();
 
     const title = document.querySelector(".page-title");
     if (title)
-      title.textContent = `Top Products: ${category.replace("-", " ")}`;
+      title.textContent = `Top Products: ${category
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")}`;
   }
 }
 
