@@ -45,10 +45,15 @@ function productDetailsTemplate(product) {
   document.querySelector(".product-detail h2").textContent = product.Brand?.Name || "";
   document.querySelector(".product-detail h3").textContent = product.Name;
 
-  const productImage = document.querySelector("img.divider");
-  if (productImage) {
-    productImage.src = product.Images?.PrimaryLarge;
-    productImage.alt = product.Name;
+  const imgContainer = document.querySelector(".img-container");
+  if (imgContainer) {
+    imgContainer.innerHTML = `
+<picture>
+  <source media="(max-width: 480px)" srcset="${product.Images?.PrimarySmall}">
+  <source media="(max-width: 768px)" srcset="${product.Images?.PrimaryMedium}">
+  <img src="${product.Images?.PrimaryLarge}" alt="${product.Brand?.Name || ""} ${product.Name}" class="divider" />
+</picture>
+    `;
   }
 
   const priceContainer = document.querySelector(".product-card__price");
