@@ -171,6 +171,21 @@ header {
   padding: 3px 6px;
 }
 
+.breadcrumb {
+  margin: 0.5rem 1rem;
+  font-size: var(--small-font);
+  color: var(--dark-grey);
+}
+
+.breadcrumb span {
+  margin: 0 0.25rem;
+}
+
+.breadcrumb .count {
+  font-weight: bold;
+  color: var(--tertiary-color);
+}
+
 .alerts {
   margin: 1rem auto;
   width: min(100%, 800px);
