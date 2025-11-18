@@ -1,4 +1,5 @@
 import { getLocalStorage } from "./utils.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 
 export default class CheckoutProcess {
     constructor(key, outputSelector) {
@@ -56,5 +57,50 @@ export default class CheckoutProcess {
         if (shippingElement) shippingElement.textContent = `$${this.shipping.toFixed(2)}`;
         if (totalElement) totalElement.textContent = `$${this.orderTotal.toFixed(2)}`;
     }
-};   
 
+    packageItems(items) {
+        return items.map(item => ({
+            id: item.Id,
+            name: item.Name,
+            price: item.FinalPrice,
+            quantity: item.quantity
+        }))
+    }
+
+    formDataToJSON(formElement) {
+        const formData = new FormData(formElement);
+        const converted = {};
+
+        formData.forEach((value, key) => { converted[key] = value });
+        return converted;
+    };
+
+    async checkout(form) {
+        const order = this.formDataToJSON(form);
+
+        order.orderDate = new Date().toISOString();
+        order.items = this.packageItems(this.list);
+        order.orderTotal = this.orderTotal.toFixed(2);
+        order.tax = this.tax.toFixed(2);
+        order.shipping = this.shipping;
+
+        const services = new ExternalServices();
+
+        try {
+            const result = await services.checkout(order);
+            console.log(result);
+
+            localStorage.removeItem("so-cart");
+            
+            alert("Order placed successfully!");
+
+            window.location.reload();
+            
+        } catch (error) {
+            console.error(error);
+            alert("There was a problem submitting your order. Please try again later.");
+
+        }
+
+    }
+}

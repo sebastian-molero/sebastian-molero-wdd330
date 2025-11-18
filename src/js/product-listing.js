@@ -1,4 +1,4 @@
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./ProductList.mjs";
 import Alert from "./Alert.js";
 import { cartLoading, getParam, searchProducts } from "./utils.mjs";
@@ -13,7 +13,7 @@ async function init() {
   const category = getParam("category");
   const searchQuery = getParam("search");
 
-  const dataSource = new ProductData();
+  const dataSource = new ExternalServices();
   const element = document.querySelector(".product-list");
 
   if (searchQuery) {
