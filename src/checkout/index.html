@@ -8,7 +8,7 @@
 
     <title>Sleep Outside | Checkout</title>
 
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
     <script src="../js/checkout.js" type="module"></script>
   </head>
 
@@ -18,6 +18,67 @@
     <main class="divider">
       <section class="products">
         <h2>Review & Place your Order</h2>
+        <div class="order">
+          <form class="form" id="checkoutForm">
+            <fieldset>
+              <legend>Customer Information</legend>
+              <label
+                >Name:<input type="text" id="firstName" required="required"
+              /></label>
+              <label
+                >Last Name:<input type="text" id="lastName" required="required"
+              /></label>
+            </fieldset>
+
+            <fieldset>
+              <legend>Shipping Address</legend>
+              <label
+                >Street:<input type="text" id="street" required="required"
+              /></label>
+              <label
+                >City:<input type="text" id="city" required="required"
+              /></label>
+              <label
+                >State:<input type="text" id="state" required="required"
+              /></label>
+              <label
+                >Postal Code:<input type="text" id="zip" required="required"
+              /></label>
+            </fieldset>
+
+            <fieldset>
+              <legend>Payment Information</legend>
+              <label
+                >Card Number:<input
+                  type="text"
+                  id="cardNumber"
+                  required="required"
+              /></label>
+              <label
+                >Expiration Date:<input
+                  type="text"
+                  id="expDate"
+                  required="required"
+              /></label>
+              <label
+                >Security Code:<input type="text" id="cvv" required="required"
+              /></label>
+            </fieldset>
+
+            <button type="submit">Place Order</button>
+          </form>
+
+          <section class="order-summary">
+            <h2>Order Summary</h2>
+            <p>Items: <span id="num-items">0</span></p>
+            <p>Subtotal: <span id="subtotal">0.00</span></p>
+            <p>Taxes: <span id="tax">0.00</span></p>
+            <p>Shipping: <span id="shipping">0.00</span></p>
+            <p>
+              <strong>Total: <span id="total">0.00</span></strong>
+            </p>
+          </section>
+        </div>
       </section>
     </main>
 
