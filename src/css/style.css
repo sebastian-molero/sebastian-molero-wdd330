@@ -546,6 +546,35 @@ header {
   }
 }
 
+.alert {
+  color: #fff;
+  padding: 0.1em 1em;
+  border-radius: 4px;
+  margin: 0.2em 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.alert.success {
+  background-color: #4caf50;
+}
+
+.alert.error {
+  background-color: #f44336;
+}
+
+.alert p {
+  text-align: justify;
+}
+
+.alert .close {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
 @media screen and (min-width: 680px) {
   .order {
     flex-direction: row;
