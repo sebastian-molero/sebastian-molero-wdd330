@@ -80,6 +80,7 @@ function productCardTemplate(product) {
             }
           </div>
         </a>
+        <button class="quick-view" data-id="${product.Id}">Quick View</button>
       </li>
     `;
   }

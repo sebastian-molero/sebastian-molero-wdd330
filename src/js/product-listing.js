@@ -40,4 +40,28 @@ async function init() {
   }
 }
 
+const services = new ExternalServices();
+const dialog = document.getElementById("quickViewDialog");
+const closeButton = document.getElementById("closeDialog");
+
+document.addEventListener("click", async (e) => {
+  if (e.target.classList.contains("quick-view")) {
+    const productId = e.target.dataset.id;
+    const product = await services.findProductById(productId);
+    const details = document.querySelector(".dialogProductDetails");
+
+    details.innerHTML = `
+      <h2>${product.Name}</h2>
+      <img src="${product.Images?.PrimaryLarge}" alt="${product.Name}" />
+      <p>${product.DescriptionHtmlSimple}</p>
+      <p><strong>Price:</strong> $${product.FinalPrice.toFixed(2)}</p>
+    `;
+    dialog.showModal();
+  }
+});
+
+closeButton.addEventListener("click", () => {
+  dialog.close();
+});
+
 init();
