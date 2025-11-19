@@ -340,6 +340,65 @@ header {
   right: 10px;
 }
 
+dialog {
+  border: none;
+  border-radius: 8px;
+  padding: 2em 1em;
+  width: min(90%, 600px);
+  margin: 0;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: relative;
+  display: flex;
+}
+
+#closeDialog {
+  position: absolute;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: var(--dark-grey);
+  top: -30px;
+  right: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.dialogProductDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+  text-align: center;
+}
+
+.dialogProductDetails img {
+  width: 50%;
+}
+
+.dialogProductDetails p:first-of-type {
+  font-size: 0.9em;
+}
+
+.dialogProductDetails p:last-of-type {
+  font-size: 1.1em;
+}
+
+.quick-view {
+  margin-top: 1em;
+}
+
 /* End product list card */
 
 .product-detail {
