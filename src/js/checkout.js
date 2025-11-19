@@ -13,17 +13,13 @@ async function initCheckout() {
 
 initCheckout();
 
-document.getElementById("zip").addEventListener("blur", () => {
-  checkout.calculateOrderTotal();
-});
+document
+  .getElementById("zip")
+  .addEventListener("blur", checkout.calculateOrderTotal.bind(checkout));
 
 document
-  .getElementById("checkoutForm")
-  .addEventListener("submit", async (e) => {
+  .querySelector("#checkoutForm button")
+  .addEventListener("click", (e) => {
     e.preventDefault();
-    if (e.target.checkValidity()) {
-      await checkout.checkout(e.target);
-    } else {
-      alert("Please fill out all required fields.");
-    }
+    checkout.checkout();
   });

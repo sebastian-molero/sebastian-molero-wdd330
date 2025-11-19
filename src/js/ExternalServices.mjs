@@ -1,10 +1,11 @@
 const baseURL = import.meta.env.VITE_SERVER_URL
 
-function convertToJson(res) {
+async function convertToJson(res) {
+  const data = await res.json();
   if (res.ok) {
-    return res.json();
+    return data;
   } else {
-    throw new Error("Bad Response");
+    throw {name: "servicesError", message: data };
   }
 }
 
@@ -32,17 +33,13 @@ export default class ExternalServices {
     return data.Result;
   }
 
-  async checkout(order) {
-    const url = "https://wdd330-backend.onrender.com/checkout";
+  async checkout(payload) {
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(order),
+      body: JSON.stringify(payload),
     };
 
-    const response = await fetch(url, options);
-    const data = await convertToJson(response);
-
-    return data;
+    return await fetch(`${baseURL}checkout/`, options).then(convertToJson);
   }
 }

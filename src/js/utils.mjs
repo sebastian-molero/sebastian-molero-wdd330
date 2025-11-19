@@ -103,3 +103,27 @@ export function searchProducts() {
   );
   }
 }
+
+export function alertMessage(message, type, scroll = true) {
+  const alert = document.createElement("div");
+  alert.classList.add("alert", type);
+  alert.innerHTML = `
+  <p>${message}</p>
+  <span class="close">&times;</span>
+  `;
+
+  alert.querySelector(".close").addEventListener("click", () => {
+    alert.remove();
+  });
+
+  const main = document.querySelector("main");
+  main.prepend(alert);
+
+  if (scroll) window.scrollTo(0, 0);
+}
+
+export function removeAllAlerts() {
+  document.querySelectorAll(".alert").forEach((alert) => {
+    alert.remove();
+  });
+}
