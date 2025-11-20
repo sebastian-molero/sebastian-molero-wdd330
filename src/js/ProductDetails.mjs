@@ -26,15 +26,18 @@ export default class ProductDetails {
     const qtyInput = document.getElementById("quantity");
     const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
 
+    const addBtn = document.getElementById("addToCart");
+    const selectedColor = addBtn?.dataset.color || this.product.Colors?.[0]?.ColorName;
+
     let cartItems = getLocalStorage("so-cart") || [];
     
-    const existing = cartItems.find(item => item.Id === this.product.Id);
-    
+    const existing = cartItems.find(
+      item => item.Id === this.product.Id && item.selectedColor === selectedColor);
     if (existing) {
       existing.quantity = (existing.quantity || 1) + quantity;
     }
     else {
-      const productToAdd = { ...this.product, quantity };
+      const productToAdd = { ...this.product, quantity, selectedColor };
       cartItems.push(productToAdd);
     }
     
@@ -48,7 +51,7 @@ export default class ProductDetails {
       cartLink.classList.remove("animate");
     }, { once: true });
 
-    alertMessage(`🛒 ${quantity} × ${this.product.Name} added to cart!`, "success");
+    alertMessage(`🛒 ${quantity} × ${this.product.Name} (${selectedColor}) added to cart!`, "success");
   }
 
   renderProductDetails() {
@@ -92,12 +95,40 @@ function productDetailsTemplate(product) {
     }
   }
 
-  const colorEl = document.querySelector(".product__color");
-  if (colorEl) colorEl.textContent = product.Colors?.[0]?.ColorName || "";
+  const descriptionContainer = document.querySelector(".product__description");
+  if (descriptionContainer) {
+    descriptionContainer.innerHTML = product.DescriptionHtmlSimple || "";
+  }
 
-  const descEl = document.querySelector(".product__description");
-  if (descEl) descEl.innerHTML = product.DescriptionHtmlSimple || "";
+  const colorContainer = document.querySelector(".product__color");
+  if (colorContainer && product.Colors?.length) {
+    colorContainer.innerHTML = `
+      <p>Chose a Color:</p>
+      <div class="color-swatches">
+        ${product.Colors.map(
+      c => `
+            <button class="swatch" data-color="${c.ColorName}" data-image="${c.ColorImage}">${c.ColorName}</button>`
+    ).join("")}
+      </div>
+      <p class="selected-color-label">Selected: ${product.Colors[0].ColorName}</p>
+    `
+  }
 
-  const addBtn = document.getElementById("addToCart");
-  if (addBtn) addBtn.dataset.id = product.Id;
+  const swatches = document.querySelectorAll(".swatch");
+  swatches.forEach(btn => {
+    btn.addEventListener("click", () => {
+      swatches.forEach(s => s.classList.remove("selected"));
+      btn.classList.add("selected");
+
+      const mainImage = document.querySelector(".img-container img");
+      if (btn.dataset.image && mainImage) {
+        mainImage.src = btn.dataset.image;
+      }
+
+      const selectedColorLabel = document.querySelector(".selected-color-label");
+      if (selectedColorLabel) selectedColorLabel.textContent = `Selected: ${btn.dataset.color}`;
+      const addBtn = document.getElementById("addToCart");
+      if (addBtn) addBtn.dataset.color = btn.dataset.color;
+    });
+  });
 }
