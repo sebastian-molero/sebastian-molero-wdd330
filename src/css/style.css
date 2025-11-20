@@ -159,16 +159,53 @@ header {
   position: relative;
 }
 
+.cart-link.animate svg {
+  animation: cart-wiggle 2s ease-in-out;
+}
+
+.cart-link.animate svg path {
+  fill: var(--tertiary-color);
+}
+
+@keyframes cart-wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  5%,
+  25% {
+    transform: rotate(-10deg);
+  }
+  15%,
+  35% {
+    transform: rotate(5deg);
+  }
+  45%,
+  55% {
+    transform: rotate(-5deg);
+  }
+  65%,
+  75% {
+    transform: rotate(0deg);
+  }
+  85%,
+  95% {
+    transform: rotate(10deg);
+  }
+}
+
 .cart-count {
   position: absolute;
-  top: -18px;
-  right: -3px;
-  background-color: rgb(168, 70, 31);
-  color: #fff;
+  top: -25px;
+  right: -10px;
+  background-color: rgb(255, 255, 255);
+  color: #000;
   font-size: 0.8rem;
   font-weight: bold;
   border-radius: 50%;
   padding: 3px 6px;
+  z-index: -1;
+  font-family: "Montserrat";
 }
 
 .breadcrumb {
@@ -281,6 +318,40 @@ header {
   font-size: 1.4rem;
   text-align: center;
   color: var(--dark-grey);
+}
+
+#welcomeDialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#closeWelcome {
+  position: absolute;
+  top: -1em;
+  right: -0.4em;
+  padding: 0;
+  margin: 0;
+  font-size: 2.5rem;
+  background-color: transparent;
+  color: var(--dark-grey);
+}
+
+#welcomeDialog .modal-content {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+#welcomeDialog a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: transform 0.3s;
+}
+
+#welcomeDialog a:hover {
+  transform: translateY(-3px);
 }
 
 /* Styles for product lists */

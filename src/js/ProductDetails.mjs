@@ -40,6 +40,14 @@ export default class ProductDetails {
     
     setLocalStorage("so-cart", cartItems);
     updateCartCount();
+    
+    const cartLink = document.querySelector(".cart-link");
+    cartLink.classList.add("animate");
+
+    cartLink.addEventListener("animationend", () => {
+      cartLink.classList.remove("animate");
+    }, { once: true });
+
     alertMessage(`🛒 ${quantity} × ${this.product.Name} added to cart!`, "success");
   }
 
