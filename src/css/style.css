@@ -564,6 +564,44 @@ dialog::backdrop {
   font-size: 0.8rem;
   color: #fff;
 }
+
+.color-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: start;
+  gap: 0.5rem;
+}
+
+.color-swatches button {
+  padding: 0.5rem;
+  color: var(--dark-grey);
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 0.9em;
+  position: relative;
+}
+
+.color-swatches button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+  transition:
+    width 0.2s,
+    color 0.2s;
+}
+
+.color-swatches button:hover::after {
+  width: 100%;
+}
+
 .product-detail__add {
   display: flex;
   flex-direction: column;
