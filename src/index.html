@@ -56,6 +56,54 @@
           <h2>Hammocks</h2>
         </a>
       </section>
+
+      <section class="newsletter">
+        <h2 class="newsletter-title">Stay in the loop</h2>
+        <p>
+          Subscribe to our newsletter for product drops, tips, and exclusive
+          offers.
+        </p>
+
+        <form id="newsletterForm" novalidate>
+          <div class="form-row">
+            <label for="newsletterEmail">Email</label>
+            <input
+              type="email"
+              id="newsletterEmail"
+              name="email"
+              placeholder="you@example.com"
+              required
+              autocomplete="email"
+            />
+            <small>We'll only use your email to send the newsletter.</small>
+          </div>
+          <div class="form-row">
+            <label for="newsletterName">Name (optional)</label>
+            <input
+              type="text"
+              id="newsletterName"
+              name="name"
+              placeholder="Your name"
+              autocomplete="name"
+            />
+          </div>
+          <div class="form-row">
+            <label class="checkbox">
+              <input
+                type="checkbox"
+                id="newsletterConsent"
+                required="required"
+              />
+              I agree to receive marketing emails and understand I can
+              unsubscribe anytime.
+            </label>
+          </div>
+
+          <button type="submit" class="btn-primary">Subscribe</button>
+
+          <div class="form-feedback"></div>
+        </form>
+      </section>
     </main>
     <footer id="footer"></footer>
 
