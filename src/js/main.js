@@ -9,3 +9,17 @@ async function init() {
 }
 
 init();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const dialog = document.getElementById("welcomeDialog");
+  const closeButton = document.getElementById("closeWelcome");
+
+  if (!localStorage.getItem("welcomeShown")) {
+    dialog.showModal();
+    localStorage.setItem("welcomeShown", "true");
+  }
+
+  closeButton.addEventListener("click", () => {
+    dialog.close();
+  });
+});
