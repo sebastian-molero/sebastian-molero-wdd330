@@ -127,3 +127,11 @@ export function removeAllAlerts() {
     alert.remove();
   });
 }
+
+export function updateWishlistCount() {
+  const wishlist = getLocalStorage("so-wishlist") || [];
+  const countEl = document.querySelector(".wishlist-count");
+  if (countEl) {
+    countEl.textContent = wishlist.length;
+  }
+}

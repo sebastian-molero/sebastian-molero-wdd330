@@ -1,4 +1,9 @@
-import { getParam, cartLoading, searchProducts } from "./utils.mjs";
+import {
+  getParam,
+  cartLoading,
+  searchProducts,
+  updateWishlistCount,
+} from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
@@ -9,6 +14,7 @@ const product = new ProductDetails(productID, dataSource);
 
 async function init() {
   await cartLoading();
+  updateWishlistCount();
   searchProducts();
   product.init();
 }

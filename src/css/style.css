@@ -121,6 +121,13 @@ button {
 header {
   display: grid;
   grid-template-columns: repeat(2, auto);
+  padding: 0 1.5rem;
+}
+
+.links {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
 }
 
 .navbar {
@@ -141,7 +148,8 @@ header {
 }
 
 /* Cart icon styles */
-.cart {
+.cart,
+.wishlist {
   padding-top: 1em;
   position: relative;
   text-align: center;
@@ -151,12 +159,39 @@ header {
   width: 25px;
 }
 
-.cart:hover svg {
-  fill: gray;
+.cart-link,
+.wishlist-link {
+  position: relative;
 }
 
-.cart-link {
-  position: relative;
+.cart-link::after,
+.wishlist-link::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.6em;
+  color: var(--tertiary-color);
+  font-weight: bold;
+  font-family: "Montserrat";
+  opacity: 0;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+
+.cart-link::after {
+  content: "CART";
+}
+
+.wishlist-link::after {
+  content: "WISHLIST";
+}
+
+.cart-link:hover::after,
+.wishlist-link:hover::after {
+  opacity: 1;
+  transform: translate(-50%, 0%);
 }
 
 .cart-link.animate svg {
@@ -194,10 +229,11 @@ header {
   }
 }
 
-.cart-count {
+.cart-count,
+.wishlist-count {
   position: absolute;
-  top: -25px;
-  right: -10px;
+  top: -20px;
+  right: -14px;
   background-color: rgb(255, 255, 255);
   color: #222;
   font-size: 0.8rem;
@@ -268,7 +304,8 @@ header {
   flex-grow: 1;
 }
 
-.product-list {
+.product-list,
+.wishlist-items {
   flex: 1 1 100%;
   display: flex;
   flex-flow: row wrap;
@@ -532,7 +569,7 @@ dialog::backdrop {
 
 .product-detail {
   padding: 1em;
-  max-width: 500px;
+  width: min(95%, 500px);
   margin: 1rem auto;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
@@ -725,6 +762,18 @@ dialog::backdrop {
   font-weight: bold;
 }
 
+.cart-card__move {
+  grid-column: 4/ 5;
+  grid-row: 3;
+  padding: 0;
+  margin: 0;
+  font-size: 1em;
+  background-color: transparent;
+  color: var(--dark-grey);
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
 .cart-card__remove {
   position: absolute;
   top: 0;

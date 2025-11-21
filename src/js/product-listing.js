@@ -1,11 +1,17 @@
 import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./ProductList.mjs";
 import Alert from "./Alert.js";
-import { cartLoading, getParam, searchProducts } from "./utils.mjs";
+import {
+  cartLoading,
+  getParam,
+  searchProducts,
+  updateWishlistCount,
+} from "./utils.mjs";
 
 async function init() {
   await cartLoading();
   searchProducts();
+  updateWishlistCount();
 
   const alert = new Alert();
   alert.init();
