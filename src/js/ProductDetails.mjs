@@ -3,7 +3,8 @@ import {
   setLocalStorage,
   discountPercentage,
   updateCartCount,
-  alertMessage
+  alertMessage, 
+  updateWishlistCount
 } from "./utils.mjs";
 
 export default class ProductDetails {
@@ -16,10 +17,16 @@ export default class ProductDetails {
   async init() {
     this.product = await this.dataSource.findProductById(this.productId);
     this.renderProductDetails();
-
+    
     document
-      .getElementById("addToCart")
-      .addEventListener("click", this.addProductToCart.bind(this));
+    .getElementById("addToCart")
+    .addEventListener("click", this.addProductToCart.bind(this));
+    
+    document
+    .getElementById("addToWishlist")
+    .addEventListener("click", this.addToWishlist.bind(this));
+
+    updateWishlistCount();
   }
 
   addProductToCart() {
@@ -52,6 +59,29 @@ export default class ProductDetails {
     }, { once: true });
 
     alertMessage(`🛒 ${quantity} × ${this.product.Name} (${selectedColor}) added to cart!`, "success");
+  }
+
+  addToWishlist() {
+    const qtyInput = document.getElementById("quantity");
+    const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+
+    const addBtn = document.getElementById("addToWishlist");
+    const selectedColor = addBtn?.dataset.color || this.product.Colors?.[0]?.ColorName;
+
+    let wishlist = getLocalStorage("so-wishlist") || [];
+    const existing = wishlist.find(
+      item => item.Id === this.product.Id && item.selectedColor === selectedColor);
+    if (!existing) {
+      const productToAdd = { ...this.product, selectedColor, quantity };
+      wishlist.push(productToAdd);
+      setLocalStorage("so-wishlist", wishlist);
+      updateWishlistCount();
+      alertMessage(`${this.product.Name} (${selectedColor}) added to wishlist!`, "success");
+    }
+    else {
+      alertMessage(`${this.product.Name} (${selectedColor}) is already in your wishlist!`, "warning");
+    }
+    
   }
 
   renderProductDetails() {
@@ -157,8 +187,11 @@ function productDetailsTemplate(product) {
 
         const selectedColorLabel = document.querySelector(".selected-color-label");
         if (selectedColorLabel) selectedColorLabel.textContent = `Selected: ${btn.dataset.color}`;
-        const addBtn = document.getElementById("addToCart");
-        if (addBtn) addBtn.dataset.color = btn.dataset.color;
+        const addCartBtn = document.getElementById("addToCart");
+        if (addCartBtn) addCartBtn.dataset.color = btn.dataset.color;
+
+        const addWishlistBtn = document.getElementById("addToWishlist");
+        if (addWishlistBtn) addWishlistBtn.dataset.color = btn.dataset.color;
       });
     });
   }

@@ -4,10 +4,12 @@ import {
   searchProducts,
   getLocalStorage,
   setLocalStorage,
+  updateWishlistCount,
 } from "./utils.mjs";
 
 async function init() {
   await cartLoading();
+  updateWishlistCount();
   const alert = new Alert();
   alert.init();
   searchProducts();
