@@ -7,6 +7,29 @@ import {
   updateWishlistCount
 } from "./utils.mjs";
 
+function getComments(productId) {
+  let allComments = getLocalStorage("so-comments");
+  if (!allComments || Array.isArray(allComments)) {
+    allComments = {} 
+  }
+  
+  return allComments[productId] || [];
+}
+
+function addComment(productId, comment) {
+  let allComments = getLocalStorage("so-comments");
+  if (!allComments || Array.isArray(allComments)) {
+    allComments = {} 
+  }
+  
+  if (!allComments[productId]) {
+    allComments[productId] = [];
+  }
+
+  allComments[productId].push(comment);
+  setLocalStorage("so-comments", allComments);
+}
+
 export default class ProductDetails {
   constructor(productId, dataSource) {
     this.productId = productId;
@@ -16,8 +39,10 @@ export default class ProductDetails {
 
   async init() {
     this.product = await this.dataSource.findProductById(this.productId);
-    this.renderProductDetails();
+    this.productId = this.product.Id;
     
+    this.renderProductDetails();
+
     document
     .getElementById("addToCart")
     .addEventListener("click", this.addProductToCart.bind(this));
@@ -87,6 +112,8 @@ export default class ProductDetails {
   renderProductDetails() {
     productDetailsTemplate(this.product);
     this.updateBreadcrumb(this.product.Category?.Name || "", "Products");
+    this.renderComments();
+    this.bindCommentForm();
   }
 
   updateBreadcrumb(category) {
@@ -94,6 +121,47 @@ export default class ProductDetails {
     if (breadcrumb) {
       breadcrumb.textContent = category;
     }
+  }
+
+  renderComments() {
+    const comments = getComments(this.productId);
+    const list = document.getElementById("comment-list");
+    if (!list) return;
+
+    if (comments.length === 0) {
+      list.innerHTML = `
+        <li>No comments yet. Be the first to add one!</li>
+      `;
+      return;
+    }
+
+    list.innerHTML = comments.map(comment => `
+      <li>
+        <p class="comment-info">
+          <strong>${comment.author}</strong>  
+          <small>${new Date(comment.date).toLocaleDateString()}</small>
+        </p>
+        <p>${comment.text}</p>
+      </li>
+    `).join("");
+  }
+
+  bindCommentForm() {
+    const form = document.getElementById("comment-form");
+    if (!form) return;
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const author = document.getElementById("comment-author").value.trim();
+      const text = document.getElementById("comment-text").value.trim();
+
+      if (author && text) {
+        addComment(this.productId, { author, text, date: new Date().toISOString() });
+        this.renderComments();
+        form.reset();
+        alertMessage("Your comment has been added!", "success");
+      }
+    })
   }
 }
 
